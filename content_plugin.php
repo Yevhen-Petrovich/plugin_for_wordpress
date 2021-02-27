@@ -80,68 +80,68 @@ function eol_plugin_settings_page() {
 	</div>
 	<?php 
 	}
-$eol_external_attribute_add_nofollow = get_option('external_add_nofollow');
-$eol_external_attribute_add_blank = get_option('external_add_blank');
+	$eol_external_attribute_add_nofollow = get_option('external_add_nofollow');
+	$eol_external_attribute_add_blank = get_option('external_add_blank');
 
 
-if( $eol_external_attribute_add_nofollow == $eol_external_attribute_add_blank){
-/**
-* add links if there are two checbox
-*/
-function eol_add_external_link($content) {
-	$content = preg_replace_callback(
-	'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
-	function($m) {
-	if (strpos($m[1], $_SERVER['SERVER_NAME']) === false)
-	return '<a id="ext-link" href="'.$m[1].'" rel="nofollow" target="_blank">'.$m[2].'</a>';
-	else
-	return '<a  href="'.$m[1].'" >'.$m[2].'</a>';
-	},
-	$content);
-	return $content;
-}
-add_filter('the_content', 'eol_add_external_link');
-$eol_external_attribute_add_nofollow = 0;
-$eol_external_attribute_add_blank = 0;
-}
+	if( $eol_external_attribute_add_nofollow == $eol_external_attribute_add_blank){
+	/**
+	* add links if there are two checbox
+	*/
+	function eol_add_external_link($content) {
+		$content = preg_replace_callback(
+		'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
+		function($m) {
+		if (strpos($m[1], $_SERVER['SERVER_NAME']) === false)
+		return '<a id="ext-link" href="'.$m[1].'" rel="nofollow" target="_blank">'.$m[2].'</a>';
+		else
+		return '<a  href="'.$m[1].'" >'.$m[2].'</a>';
+		},
+		$content);
+		return $content;
+	}
+	add_filter('the_content', 'eol_add_external_link');
+	$eol_external_attribute_add_nofollow = 0;
+	$eol_external_attribute_add_blank = 0;
+	}
 
-if(checked( $eol_external_attribute_add_nofollow, 1, false ))
-{
-/**
-* add links if nofollow
-*/
-	function eol_add_external_link_nofollow($content) 
+	if(checked( $eol_external_attribute_add_nofollow, 1, false ))
 	{
-		
-		$content = preg_replace_callback(
-		'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
-		function($m) {
-		if (strpos($m[1], $_SERVER['SERVER_NAME']) === false)
-		return '<a id="ext-link" href="'.$m[1].'" rel="nofollow">'.$m[2].'</a>';
-		else
-		return '<a  href="'.$m[1].'" >'.$m[2].'</a>';
-		},
-		$content);
-		return $content;
+	/**
+	* add links if nofollow
+	*/
+		function eol_add_external_link_nofollow($content) 
+		{
+			
+			$content = preg_replace_callback(
+			'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
+			function($m) {
+			if (strpos($m[1], $_SERVER['SERVER_NAME']) === false)
+			return '<a id="ext-link" href="'.$m[1].'" rel="nofollow">'.$m[2].'</a>';
+			else
+			return '<a  href="'.$m[1].'" >'.$m[2].'</a>';
+			},
+			$content);
+			return $content;
+		}
+	add_filter('the_content', 'eol_add_external_link_nofollow');
 	}
-add_filter('the_content', 'eol_add_external_link_nofollow');
-}
-if(checked( $eol_external_attribute_add_blank, 1, false )){
-/**
-* add links if _blank
-*/
-	function eol_add_external_link_blank($content) {
-		$content = preg_replace_callback(
-		'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
-		function($m) {
-		if (strpos($m[1], $_SERVER['SERVER_NAME']) === false)
-		return '<a id="ext-link" href="'.$m[1].'" target="_blank">'.$m[2].'</a>';
-		else
-		return '<a  href="'.$m[1].'" >'.$m[2].'</a>';
-		},
-		$content);
-		return $content;
+	if(checked( $eol_external_attribute_add_blank, 1, false )){
+	/**
+	* add links if _blank
+	*/
+		function eol_add_external_link_blank($content) {
+			$content = preg_replace_callback(
+			'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
+			function($m) {
+			if (strpos($m[1], $_SERVER['SERVER_NAME']) === false)
+			return '<a id="ext-link" href="'.$m[1].'" target="_blank">'.$m[2].'</a>';
+			else
+			return '<a  href="'.$m[1].'" >'.$m[2].'</a>';
+			},
+			$content);
+			return $content;
+		}
+	add_filter('the_content', 'eol_add_external_link_blank');
 	}
-add_filter('the_content', 'eol_add_external_link_blank');
-}
 ?>
