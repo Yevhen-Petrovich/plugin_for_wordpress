@@ -111,8 +111,7 @@ function eol_plugin_settings_page() {
 	* add links if nofollow
 	*/
 		function eol_add_external_link_nofollow($content) 
-		{
-			
+		{			
 			$content = preg_replace_callback(
 			'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
 			function($m) {
