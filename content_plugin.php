@@ -56,7 +56,7 @@ function plugin_settings_page() {
 	
 	<form method="POST" action="options.php">
 				
-		<?php do_settings_sections( 'plugin-settings-group_' ); ?>
+		<?php do_settings_sections( 'plugin-settings-group' ); ?>
 		<?php settings_fields( 'plugin-settings-group' ); ?>
 		
 		<?php 	$external_attribute_add_nofollow = get_option( 'external_add_nofollow' );	?>
@@ -68,7 +68,7 @@ function plugin_settings_page() {
 			<td><input type='checkbox' id='external_add_nofollow' name='external_add_nofollow' value='1' <?php echo checked( $external_attribute_add_nofollow, 1, false );?> /></td>
 			</tr>
 		</table>
-	
+		
 		<table class="form-table">
 		<tr valign="top">
 			<th scope="row">Open links in a new tab (target="_blank"):</th>
@@ -80,11 +80,12 @@ function plugin_settings_page() {
 	</div>
 	<?php 
 	}
+
 	$external_attribute_add_nofollow = get_option('external_add_nofollow');
 	$external_attribute_add_blank = get_option('external_add_blank');
 
 
-	if( $external_attribute_add_nofollow == $external_attribute_add_blank){
+	if( checked( $external_attribute_add_nofollow && $external_attribute_add_blank, 1, false )){
 	/**
 	* add links if there are two checbox
 	*/
@@ -111,7 +112,8 @@ function plugin_settings_page() {
 	* add links if nofollow
 	*/
 		function add_external_link_nofollow($content) 
-		{			
+		{
+			
 			$content = preg_replace_callback(
 			'/<a[^>]*href=["|\']([^"|\']*)["|\'][^>]*>([^<]*)<\/a>/i',
 			function($m) {
